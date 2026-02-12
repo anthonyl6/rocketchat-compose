@@ -137,7 +137,7 @@ services:
     restart: on-failure
     user: "0"
     volumes:
-      - ${MONGODB_HOST_PATH:-mongodb_data}:/data/db:rw
+      - ${MONGODB_HOST_PATH:-ferretdb_pgdata}:/data/db:rw
     environment:
       MONGODB_USER_ID: ${MONGODB_USER_ID:-1001}
     logging:
@@ -170,7 +170,7 @@ services:
       MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/?directConnection=true}
       MONGODB_ADVERTISED_HOSTNAME: ${MONGODB_ADVERTISED_HOSTNAME:-mongodb}
     volumes:
-      - ${MONGODB_HOST_PATH:-mongodb_data}:/data/db:rw
+      - ${MONGODB_HOST_PATH:-ferretdb_pgdata}:/data/db:rw
     logging:
       driver: "journald"
       options:
@@ -244,7 +244,7 @@ services:
       options:
         tag: "${COMPOSE_PROJECT_NAME:-rocketchat}#mongodb-exporter#{{.Name}}"
 volumes:
-  mongodb_data:
+  ferretdb_pgdata:
     driver: local
 
 networks:
