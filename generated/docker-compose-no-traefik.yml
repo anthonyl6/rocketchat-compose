@@ -139,7 +139,7 @@ services:
     volumes:
       - ${MONGODB_HOST_PATH:-ferretdb_pgdata}:/data/db:rw
     environment:
-      MONGODB_USER_ID: ${MONGODB_USER_ID:-1001}
+      MONGODB_USER_ID: ${MONGODB_USER_ID:-999}
     logging:
       driver: "journald"
       options:
