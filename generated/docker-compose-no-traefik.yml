@@ -125,8 +125,7 @@ services:
       driver: "journald"
       options:
         tag: "${COMPOSE_PROJECT_NAME:-rocketchat}#mongodb-init-container#{{.Name}}"
-    entrypoint: "sh -xc '\n  echo \"=====> Waiting for MongoDB to be healthy before initiating replica set...\";\n  until mongosh \"$$MONGODB_URI\" --eval \"db.adminCommand(\\\"ping\\\")\" >/dev/null 2>&1; do\n    echo \"=====> MongoDB not ready yet, retrying in 5 seconds...\";\n    sleep 5;\n  done;\n  echo \"=====> Initiating ReplSet $$MONGODB_REPLICA_SET_NAME at $$MONGODB_ADVERTISED_HOSTNAME:$$MONGODB_PORT_NUMBER...\";\n  mongosh \"$$MONGODB_URI\" --eval \"rs.initiate({_id: \\\"$$MONGODB_REPLICA_SET_NAME\\\", members: [{ _id: 0, host: \\\"$$MONGODB_ADVERTISED_HOSTNAME:$$MONGODB_PORT_NUMBER\\\" }]})\";\n  echo \"=====> Initiating ReplSet done...\";\n'\n  \n"
-  mongodb:
+      entrypoint: "sh -xc 'echo \"=====> Waiting for MongoDB to be healthy before initiating replica set...\"; until mongo \"$$MONGODB_URI\" --eval \"db.adminCommand(\\\"ping\\\")\" >/dev/null 2>&1; do echo \"=====> MongoDB not ready yet, retrying in 5 seconds...\"; sleep 5; done; echo \"=====> Initiating ReplSet $$MONGODB_REPLICA_SET_NAME at $$MONGODB_ADVERTISED_HOSTNAME:$$MONGODB_PORT_NUMBER...\"; mongo \"$$MONGODB_URI\" --eval \"rs.initiate({_id: '\\''$$MONGODB_REPLICA_SET_NAME'\\'', members: [{ _id: 0, host: '\\''$$MONGODB_ADVERTISED_HOSTNAME:$$MONGODB_PORT_NUMBER'\\'' }]})\"; echo \"=====> Initiating ReplSet done...\"'"  mongodb:
     image: docker.io/mongodb/mongodb-community-server:${MONGODB_VERSION:-8.2}-ubi8
     restart: always
     # depends_on:
