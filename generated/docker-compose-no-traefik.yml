@@ -1,6 +1,6 @@
 services:
   ferretdb:
-    image: ghcr.io/ferretdb/ferretdb:v0.20.2
+    image: ghcr.io/ferretdb/ferretdb:2.7.0
     networks:
       - rocketchat
     hostname: mongodb
