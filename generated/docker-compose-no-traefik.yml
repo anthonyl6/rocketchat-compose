@@ -142,7 +142,7 @@ services:
         echo "=====> Waiting for /data/db to be owned by uid=$$MONGODB_USER_ID (mongodb user) ...";
         for i in $(seq 1 60); do
           owner="$(stat -c %u /data/db 2>/dev/null || true)";
-          if [ "$$owner" = "$$MONGODB_USER_ID" ]; then
+          if [ "$$owner" = "$MONGODB_USER_ID" ]; then
             echo "=====> /data/db ownership OK ($$owner) - starting MongoDB";
             exec mongod --replSet "$$MONGODB_REPLICA_SET_NAME" --bind_ip_all;
           fi;
