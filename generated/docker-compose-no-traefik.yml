@@ -232,7 +232,7 @@ services:
       - rocketchat
     hostname: mongodbexporter
     depends_on:
-      - mongodb
+      - ferretdb
     expose:
       - 9216
     command:
