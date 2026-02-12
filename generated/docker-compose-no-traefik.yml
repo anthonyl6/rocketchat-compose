@@ -162,13 +162,13 @@ services:
       driver: "journald"
       options:
         tag: "${COMPOSE_PROJECT_NAME:-rocketchat}#mongodb#{{.Name}}"
-    healthcheck:
-      test:
-        - CMD
-        - mongosh
-        - "mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_PORT_NUMBER:-27017}/?directConnection=true"
-        - --eval
-        - "\"db.adminCommand('ping')\""
+    # healthcheck:
+    #   test:
+    #     - CMD
+    #     - mongosh
+    #     - "mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_PORT_NUMBER:-27017}/?directConnection=true"
+    #     - --eval
+    #     - "\"db.adminCommand('ping')\""
       interval: 30s
       timeout: 20s
       retries: 10
