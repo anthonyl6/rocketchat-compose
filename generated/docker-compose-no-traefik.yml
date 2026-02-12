@@ -129,30 +129,30 @@ services:
       driver: "journald"
       options:
         tag: "${COMPOSE_PROJECT_NAME:-rocketchat}#nats-exporter#{{.Name}}"
-  mongodb-fix-permission-container:
-    image: docker.io/mongodb/mongodb-community-server:4.4-ubi8
-    networks:
-      - rocketchat
-    hostname: mongodbfix
-    restart: on-failure
-    user: "0"
-    volumes:
-      - ${MONGODB_HOST_PATH:-ferretdb_pgdata}:/data/db:rw
-    environment:
-      MONGODB_USER_ID: ${MONGODB_USER_ID:-999}
-    logging:
-      driver: "journald"
-      options:
-        tag: "${COMPOSE_PROJECT_NAME:-rocketchat}#mongodb-fix-permission-container#{{.Name}}"
-    entrypoint: |
-      sh -xc '
-        owner="$(stat -c %u /data/db)";
-        # for fresh installs
-        if [ "$$owner" != "$$MONGODB_USER_ID" ]; then
-          echo "=====> Fixing directory ownership to uid $$MONGODB_USER_ID"
-          chown -R "$$MONGODB_USER_ID" /data/db;
-        else echo "=====> Nothing to do"; fi;
-      '
+  # mongodb-fix-permission-container:
+  #   image: docker.io/mongodb/mongodb-community-server:4.4-ubi8
+  #   networks:
+  #     - rocketchat
+  #   hostname: mongodbfix
+  #   restart: on-failure
+  #   user: "0"
+  #   volumes:
+  #     - ${MONGODB_HOST_PATH:-ferretdb_pgdata}:/data/db:rw
+  #   environment:
+  #     MONGODB_USER_ID: ${MONGODB_USER_ID:-999}
+  #   logging:
+  #     driver: "journald"
+  #     options:
+  #       tag: "${COMPOSE_PROJECT_NAME:-rocketchat}#mongodb-fix-permission-container#{{.Name}}"
+  #   entrypoint: |
+  #     sh -xc '
+  #       owner="$(stat -c %u /data/db)";
+  #       # for fresh installs
+  #       if [ "$$owner" != "$$MONGODB_USER_ID" ]; then
+  #         echo "=====> Fixing directory ownership to uid $$MONGODB_USER_ID"
+  #         chown -R "$$MONGODB_USER_ID" /data/db;
+  #       else echo "=====> Nothing to do"; fi;
+  #     '
   # TODO: add user creation here
   mongodb-init-container:
     image: docker.io/mongodb/mongodb-community-server:4.4-ubi8
